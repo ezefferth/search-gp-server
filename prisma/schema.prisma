@@ -50,7 +50,7 @@ model Acoes {
   id           String   @id @default(uuid())
   acesso       Acessos  @relation(fields: [fk_acessos], references: [id], onDelete: Cascade)
   fk_acessos   String
-  tipo_acesso  String? //exemplo contribuinte, 
+  tipo_acesso  String 
   criar        Boolean? @default(false)
   editar       Boolean? @default(false)
   remover      Boolean? @default(false)

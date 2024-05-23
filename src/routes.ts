@@ -1,8 +1,11 @@
 import { Router } from "express";
 
 import { LerAcoes } from "./controllers/acoes/lerAcoes";
+import { DeletarAcoes } from "./controllers/acoes/deletarAcoes";
+
 
 import { LerAcessos } from "./controllers/acessos/lerAcessos";
+import { AtualizarAcessos } from "./controllers/acessos/atualizarAcesso";
 
 import { InserirGrupo } from "./controllers/grupo/inserirGrupo";
 import { DeletarGrupo } from "./controllers/grupo/deletarGrupo";
@@ -21,8 +24,10 @@ import { AtualizarSetor } from "./controllers/setor/atualizarSetor";
 const router = Router();
 
 const lerAcoes = new LerAcoes();
+const deletarAcoes = new DeletarAcoes();
 
 const lerAcessos = new LerAcessos();
+const atualizarAcessos = new AtualizarAcessos();
 
 const inserirGrupo = new InserirGrupo();
 const atualizarGrupo = new AtualizarGrupo();
@@ -41,8 +46,10 @@ const deletarSetor = new DeletarSetor()
 const lerSetores = new LerSetores();
 
 router.get("/lerAcoes", lerAcoes.handle)
+router.delete("/deletarAcoes",deletarAcoes.handle)
 
 router.get("/lerAcessos", lerAcessos.handle)
+router.post("/atualizarAcessos", atualizarAcessos.handle)
 
 router.post("/inserirGrupo", inserirGrupo.handle);
 router.post("/atualizarGrupo", atualizarGrupo.handle)
