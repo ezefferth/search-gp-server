@@ -3,6 +3,8 @@ import { Request, Response } from 'express'
 import { Prisma } from '@prisma/client'
 import { prismaClient } from '../../data/prismaClient'
 
+
+/* NÃO DEVE SER UTILIZADO POR AKI */
 export class DeletarAcoes {
   async handle(request: Request, response: Response) {
     const { id } = request.body

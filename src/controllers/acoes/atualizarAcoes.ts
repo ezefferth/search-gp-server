@@ -3,19 +3,19 @@ import { Request, Response } from 'express'
 import { Prisma } from '@prisma/client'
 import { prismaClient } from '../../data/prismaClient'
 
-export class AtualizarGrupo {
+export class AtualizarAcoes {
   async handle(request: Request, response: Response) {
-    const { id, nome } = request.body
+    const { id, ...data } = request.body;
+
     try {
-      const grupo = await prismaClient.grupo.update({
+      const acoes = await prismaClient.acoes.update({
         where: {
-          id: id
+          id: id,
         },
-        data: {
-          nome,
-        },
+
+        data: data
       })
-      return response.status(200).json(grupo)
+      return response.status(200).json(acoes)
     }
     catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
