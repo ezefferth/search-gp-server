@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  nome       String   @unique
+  nome_login String   @unique
+  grupo      Grupo[]
+  acesso     Acessos?
+  setor      Setor    @relation(fields: [fk_setor], references: [id])
+  fk_setor   String
+
+  @@map("usuarios")
+}
+
+model Setor {
+  id      String    @id @default(uuid())
+  nome    String    @unique
+  usuario Usuario[]
+
+  @@map("setores")
+}
+
+model Grupo {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  nome      String    @unique
+  usuario   Usuario[]
+  acesso    Acessos?
+  
+  @@map("grupos")
+}
+
+model Acoes {
+  id           String   @id @default(uuid())
+  acesso       Acessos  @relation(fields: [fk_acessos], references: [id], onDelete: Cascade)
+  fk_acessos   String
+  tipo_acesso  String? //exemplo contribuinte, 
+  criar        Boolean? @default(false)
+  editar       Boolean? @default(false)
+  remover      Boolean? @default(false)
+  emitir       Boolean? @default(false)
+  emitirSegVia Boolean? @default(false)
+  cancelar     Boolean? @default(false)
+  reativar     Boolean? @default(false)
+  manutencao   Boolean? @default(false)
+  estornar     Boolean? @default(false)
+  homologar    Boolean? @default(false)
+  consultar    Boolean? @default(false)
+  transferir   Boolean? @default(false)
+  executar     Boolean? @default(false)
+
+  @@map("acoes")
+}
+
+model Acessos {
+  id                                  String   @id @default(uuid())
+  createdAt                           DateTime @default(now())
+  updatedAt                           DateTime @updatedAt
+  usuario                             Usuario? @relation(fields: [fk_usuario], references: [id], onDelete: Cascade)
+  fk_usuario                          String? @unique
+  grupo                               Grupo?   @relation(fields: [fk_grupo], references: [id], onDelete: Cascade)
+  fk_grupo                            String? @unique
+  acoes                               Acoes[] 
+  agencias                            Boolean? @default(false)
+  aliquotas_irrf                      Boolean? @default(false)
+  antecipacao_prorrogacao_vencimentos Boolean? @default(false)
+  arquivo_config                      Boolean? @default(false)
+  atos                                Boolean? @default(false)
+  bancos                              Boolean? @default(false)
+  baixa_automatica                    Boolean? @default(false)
+  baixa_manual                        Boolean? @default(false)
+  beneficiarios_fiscais               Boolean? @default(false)
+  calculo                             Boolean? @default(false)
+  camaras_adicionais                  Boolean? @default(false)
+  cancelamento_reativacao_documentos  Boolean? @default(false)
+  cadastro_geral                      Boolean? @default(false)
+  cadastros_gerais                    Boolean? @default(false)
+  campos_adicionais                   Boolean? @default(false)
+  cartorios                           Boolean? @default(false)
+  coberturas                          Boolean? @default(false)
+  competencias                        Boolean? @default(false)
+  condicoes_parcelamento              Boolean? @default(false)
+  configuracao_boletos                Boolean? @default(false)
+  configuracao_cancelamento_boletos   Boolean? @default(false)
+  configuracao_guia_boletos           Boolean? @default(false)
+  configuracao_inscricao_boletos      Boolean? @default(false)
+  configuracao_pagamentos_boletos     Boolean? @default(false)
+  configuracoes_economicas            Boolean? @default(false)
+  configuracoes_imoveis               Boolean? @default(false)
+  configuracoes_notas_avulsas         Boolean? @default(false)
+  configuracoes_receitas_diversas     Boolean? @default(false)
+  construtoras                        Boolean? @default(false)
+  contribuicoes_melhoria              Boolean? @default(false)
+  contribuintes                       Boolean? @default(false)
+  controle_saldo_devedor              Boolean? @default(false)
+  creditos_tributarios                Boolean? @default(false)
+  declaracao_iss_homologado           Boolean? @default(false)
+  desmembramentos                     Boolean? @default(false)
+  documentos                          Boolean? @default(false)
+  documentos_config                   Boolean? @default(false)
+  economicos                          Boolean? @default(false)
+  enderecos                           Boolean? @default(false)
+  englobados                          Boolean? @default(false)
+  engenheiros                         Boolean? @default(false)
+  estorno_inscricao                   Boolean? @default(false)
+  feriados                            Boolean? @default(false)
+  fontes_divulgacao                   Boolean? @default(false)
+  formulas                            Boolean? @default(false)
+  geoprocessamento                    Boolean? @default(false)
+  geoprocessamento_config             Boolean? @default(false)
+  gerenciador_economico               Boolean? @default(false)
+  guias                               Boolean? @default(false)
+  horarios_funcionamento              Boolean? @default(false)
+  imoveis                             Boolean? @default(false)
+  imoveis_config                      Boolean? @default(false)
+  imobiliarias                        Boolean? @default(false)
+  indexadores                         Boolean? @default(false)
+  inscricao_divida                    Boolean? @default(false)
+  integracao_contabil                 Boolean? @default(false)
+  integracao_lancamentos_config       Boolean? @default(false)
+  integracoes_contabeis_config        Boolean? @default(false)
+  junta_comercial_config              Boolean? @default(false)
+  livros_divida_ativa                 Boolean? @default(false)
+  limites_arrecadacao                 Boolean? @default(false)
+  manutencao_divida                   Boolean? @default(false)
+  manutencao_pagamentos               Boolean? @default(false)
+  materiais_servicos                  Boolean? @default(false)
+  motivos                             Boolean? @default(false)
+  naturezas_texto_juridico            Boolean? @default(false)
+  notas_avulsas                       Boolean? @default(false)
+  notas_avulsas_config                Boolean? @default(false)
+  obras                               Boolean? @default(false)
+  obras_config                        Boolean? @default(false)
+  parcelas                            Boolean? @default(false)
+  parcelamento_credito                Boolean? @default(false)
+  planta_valores                      Boolean? @default(false)
+  receitas_diversas                   Boolean? @default(false)
+  receitas_diversas_config            Boolean? @default(false)
+  requerimento_manutencao_lancamento  Boolean? @default(false)
+  tabelas_calculo                     Boolean? @default(false)
+  taxas_expediente_config             Boolean? @default(false)
+  termos_abertura_encerramento_livro  Boolean? @default(false)
+  tipos_documentos                    Boolean? @default(false)
+  transferencia_imoveis               Boolean? @default(false)
+  transferencia_imoveis_config        Boolean? @default(false)
+  unidades_medida                     Boolean? @default(false)
+  viabilidade                         Boolean? @default(false)
+
+  @@map("acessos")
+}
