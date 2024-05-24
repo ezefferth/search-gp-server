@@ -28,9 +28,11 @@ model Usuario {
 }
 
 model Setor {
-  id      String    @id @default(uuid())
-  nome    String    @unique
-  usuario Usuario[]
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  nome      String    @unique
+  usuario   Usuario[]
 
   @@map("setores")
 }
@@ -42,15 +44,17 @@ model Grupo {
   nome      String    @unique
   usuario   Usuario[]
   acesso    Acessos?
-  
+
   @@map("grupos")
 }
 
 model Acoes {
   id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   acesso       Acessos  @relation(fields: [fk_acessos], references: [id], onDelete: Cascade)
   fk_acessos   String
-  tipo_acesso  String 
+  tipo_acesso  String
   criar        Boolean? @default(false)
   editar       Boolean? @default(false)
   remover      Boolean? @default(false)
@@ -73,10 +77,10 @@ model Acessos {
   createdAt                           DateTime @default(now())
   updatedAt                           DateTime @updatedAt
   usuario                             Usuario? @relation(fields: [fk_usuario], references: [id], onDelete: Cascade)
-  fk_usuario                          String? @unique
+  fk_usuario                          String?  @unique
   grupo                               Grupo?   @relation(fields: [fk_grupo], references: [id], onDelete: Cascade)
-  fk_grupo                            String? @unique
-  acoes                               Acoes[] 
+  fk_grupo                            String?  @unique
+  acoes                               Acoes[]
   agencias                            Boolean? @default(false)
   aliquotas_irrf                      Boolean? @default(false)
   antecipacao_prorrogacao_vencimentos Boolean? @default(false)
