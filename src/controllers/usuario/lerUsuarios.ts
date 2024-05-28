@@ -8,7 +8,11 @@ export class LerUsuarios {
     //const { id } = request.body
 
     try {
-      const usuario = await prismaClient.usuario.findMany()
+      const usuario = await prismaClient.usuario.findMany({
+        orderBy: {
+          nome: 'asc'
+        }
+      })
 
       return response.status(200).json(usuario)
     }

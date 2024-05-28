@@ -8,7 +8,11 @@ export class LerGrupos {
 
     try {
 
-      const grupos = await prismaClient.grupo.findMany()
+      const grupos = await prismaClient.grupo.findMany({
+        orderBy: {
+          nome: 'asc'
+        }
+      })
 
       return response.status(200).json(grupos)
     }

@@ -8,7 +8,11 @@ export class LerSetores {
 
     try {
 
-      const setor = await prismaClient.setor.findMany()
+      const setor = await prismaClient.setor.findMany({
+        orderBy: {
+          nome: 'asc'
+        }
+      })
 
       return response.status(200).json(setor)
     }
