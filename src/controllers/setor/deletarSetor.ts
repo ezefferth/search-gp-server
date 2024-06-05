@@ -5,13 +5,13 @@ import { prismaClient } from '../../data/prismaClient'
 
 export class DeletarSetor {
   async handle(request: Request, response: Response) {
-    const { nome } = request.body
+    const { id } = request.body
 
     try {
 
       const setor = await prismaClient.setor.delete({
         where: {
-          nome: nome
+          id: id
         }
       })
       return response.status(200).json(setor)
