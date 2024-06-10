@@ -13,6 +13,11 @@ export class InserirUsuario {
           nome,
           fk_setor,
           nome_login,
+          acesso: {
+            create: {
+              
+            }
+          }
         },
       })
       return response.status(200).json(usuario)
