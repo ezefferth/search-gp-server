@@ -3,22 +3,20 @@ import { Request, Response } from 'express'
 import { Prisma } from '@prisma/client'
 import { prismaClient } from '../../data/prismaClient'
 
-export class InserirGrupo {
+export class LerSecretaria {
   async handle(request: Request, response: Response) {
-    const { nome } = request.body
+
     try {
-      const grupo = await prismaClient.grupo.create({
-        data: {
-          nome,
-          acesso: {
-            create: {
-              
-            }
-          }
-        },
+
+      const setor = await prismaClient.secretaria.findMany({
+        orderBy: {
+          nome: 'asc'
+        }
       })
-      return response.status(200).json(grupo)
+
+      return response.status(200).json(setor)
     }
+
     catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         // The .code property can be accessed in a type-safe manner

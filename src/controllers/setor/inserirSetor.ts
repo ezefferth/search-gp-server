@@ -5,11 +5,12 @@ import { prismaClient } from '../../data/prismaClient'
 
 export class InserirSetor {
   async handle(request: Request, response: Response) {
-    const { nome } = request.body
+    const { nome, fk_secretaria } = request.body
     try {
       const setor = await prismaClient.setor.create({
         data: {
           nome,
+          fk_secretaria
         },
       })
       return response.status(200).json(setor)

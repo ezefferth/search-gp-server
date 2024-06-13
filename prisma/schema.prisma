@@ -23,16 +23,29 @@ model Usuario {
   acesso     Acessos?
   setor      Setor    @relation(fields: [fk_setor], references: [id])
   fk_setor   String
+  vinculo    String
+  cargo      String
 
   @@map("usuarios")
 }
 
+model Secretaria {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nome      String   @unique
+  setor     Setor[]
+  @@map("secretaria")
+}
+
 model Setor {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  nome      String    @unique
-  usuario   Usuario[]
+  id            String     @id @default(uuid())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  nome          String     @unique
+  secretaria    Secretaria @relation(fields: [fk_secretaria], references: [id])
+  fk_secretaria String
+  usuario       Usuario[]
 
   @@map("setores")
 }

@@ -5,7 +5,7 @@ import { prismaClient } from '../../data/prismaClient'
 
 export class AtualizarUsuario {
   async handle(request: Request, response: Response) {
-    const { id, nome, nome_login, fk_setor } = request.body
+    const { id, nome, nome_login, fk_setor, vinculo, cargo } = request.body
 
     try {
       const usuario = await prismaClient.usuario.update({
@@ -15,7 +15,9 @@ export class AtualizarUsuario {
         data: {
           nome,
           nome_login,
-          fk_setor
+          fk_setor,
+          vinculo,
+          cargo
         }
       })
       return response.status(200).json(usuario)

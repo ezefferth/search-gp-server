@@ -5,7 +5,7 @@ import { prismaClient } from '../../data/prismaClient'
 
 export class InserirUsuario {
   async handle(request: Request, response: Response) {
-    const { nome, fk_setor, nome_login } = request.body
+    const { nome, fk_setor, nome_login, vinculo, cargo } = request.body
 
     try {
       const usuario = await prismaClient.usuario.create({
@@ -13,6 +13,8 @@ export class InserirUsuario {
           nome,
           fk_setor,
           nome_login,
+          vinculo,
+          cargo,
           acesso: {
             create: {
               

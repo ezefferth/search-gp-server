@@ -3,20 +3,16 @@ import { Request, Response } from 'express'
 import { Prisma } from '@prisma/client'
 import { prismaClient } from '../../data/prismaClient'
 
-
-/* NÃO DEVE SER UTILIZADO POR AKI */
-export class DeletarAcoes {
+export class InserirSecretaria {
   async handle(request: Request, response: Response) {
-    const { id } = request.body
-
+    const { nome } = request.body
     try {
-
-      const acoes = await prismaClient.acoes.delete({
-        where: {
-          id
-        }
+      const secretaria = await prismaClient.secretaria.create({
+        data: {
+          nome,
+        },
       })
-      return response.status(200).json(acoes)
+      return response.status(200).json(secretaria)
     }
     catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -26,3 +22,4 @@ export class DeletarAcoes {
     }
   }
 }
+

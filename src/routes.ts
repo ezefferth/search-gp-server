@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { LerAcoes } from "./controllers/acoes/lerAcoes";
 import { AtualizarAcoes } from "./controllers/acoes/atualizarAcoes";
-import { DeletarAcoes } from "./controllers/acoes/deletarAcoes";
+//import { DeletarAcoes } from "./controllers/acoes/deletarAcoes";
 
 import { LerAcessos } from "./controllers/acessos/lerAcessos";
 import { AtualizarAcessos } from "./controllers/acessos/atualizarAcesso";
@@ -22,11 +22,17 @@ import { DeletarSetor } from "./controllers/setor/deletarSetor";
 import { LerSetores } from "./controllers/setor/lerSetores";
 import { AtualizarSetor } from "./controllers/setor/atualizarSetor";
 
+import { InserirSecretaria } from "./controllers/secretaria/inserirSecretaria";
+import { LerSecretaria } from "./controllers/secretaria/lerSecretaria";
+
 const router = Router();
 
 const lerAcoes = new LerAcoes();
 const atualizarAcoes = new AtualizarAcoes();
-const deletarAcoes = new DeletarAcoes();
+//const deletarAcoes = new DeletarAcoes();
+const lerSecretaria= new LerSecretaria();
+const inserirSecretaria = new InserirSecretaria();
+//const deletarAcoes = new DeletarAcoes();
 
 const lerAcessos = new LerAcessos();
 const atualizarAcessos = new AtualizarAcessos();
@@ -49,7 +55,10 @@ const lerSetores = new LerSetores();
 
 router.get("/lerAcoes", lerAcoes.handle)
 router.post("/atualizarAcoes", atualizarAcoes.handle)
-router.delete("/deletarAcoes", deletarAcoes.handle)
+//router.delete("/deletarAcoes", deletarAcoes.handle)
+
+router.get("/lerSecretaria", lerSecretaria.handle)
+router.post("/inserirSecretaria", inserirSecretaria.handle)
 
 router.get("/lerAcessos", lerAcessos.handle)
 router.post("/atualizarAcessos", atualizarAcessos.handle)
