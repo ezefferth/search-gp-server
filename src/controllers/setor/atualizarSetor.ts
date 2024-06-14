@@ -5,7 +5,7 @@ import { prismaClient } from '../../data/prismaClient'
 
 export class AtualizarSetor {
   async handle(request: Request, response: Response) {
-    const { id, nome } = request.body
+    const { id, nome, fk_secretaria } = request.body
     try {
       const setor = await prismaClient.setor.update({
         where: {
@@ -13,6 +13,7 @@ export class AtualizarSetor {
         },
         data: {
           nome,
+          fk_secretaria
         },
       })
       return response.status(200).json(setor)

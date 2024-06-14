@@ -17,7 +17,7 @@ export class InserirUsuario {
           cargo,
           acesso: {
             create: {
-              
+
             }
           }
         },
