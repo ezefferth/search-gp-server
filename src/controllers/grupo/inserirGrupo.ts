@@ -17,12 +17,12 @@ export class InserirGrupo {
           }
         },
       })
-      return response.status(409).json(grupo)
+      return response.status(200).json(grupo)
     }
     catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         // The .code property can be accessed in a type-safe manner
-        return response.status(200).json(e.code)
+        return response.status(409).json(e.code)
       }
     }
   }
